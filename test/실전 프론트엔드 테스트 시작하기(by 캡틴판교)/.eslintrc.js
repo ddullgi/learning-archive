@@ -1,6 +1,10 @@
 module.exports = {
-  extends: ["next/core-web-vitals", "plugin:prettier/recommended"],
-  plugins: ["prettier"],
+  extends: [
+    "next/core-web-vitals",
+    "plugin:prettier/recommended",
+    "plugin:cypress/recommended",
+  ],
+  plugins: ["prettier", "cypress"],
   rules: {
     // 선언되지 않은 변수 또는 임포트 구문 정리 규칙
     "no-undef": "error",
@@ -17,6 +21,7 @@ module.exports = {
         printWidth: 80,
         bracketSpacing: true,
         arrowParens: "avoid",
+        endOfLine: "auto",
       },
     ],
   },
