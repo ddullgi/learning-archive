@@ -1,19 +1,45 @@
-import Link from 'next/link';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import ProductList from '@/components/product-list/ProductList';
-import ProductHeader from '@/components/ProductHeader';
+import Link from "next/link";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import ProductList from "@/components/product-list/ProductList";
+import ProductHeader from "@/components/ProductHeader";
 
-// '/'에 해당하는 페이지 컴포넌트
-function ProductPage() {
-  const headerTitle = '상품 목록 페이지';
+function Counter() {
+  const [counter, setCounter] = useState(0);
+
+  const increaseCounter = () => {
+    setCounter(counter + 1);
+  };
+
+  const decreaseCounter = () => {
+    setCounter(counter - 1);
+  };
 
   return (
     <div>
-      <ProductHeader title={headerTitle} />
-      <ProductList></ProductList>
+      <p data-cy="counter">{counter}</p>
+      <button data-cy="add-button" onClick={increaseCounter}>
+        +
+      </button>
+      <button data-cy="minus-button" onClick={decreaseCounter}>
+        -
+      </button>
     </div>
   );
+}
+
+// '/'에 해당하는 페이지 컴포넌트
+function ProductPage() {
+  const headerTitle = "상품 목록 페이지";
+
+  // return (
+  //   <div>
+  //     <ProductHeader title={headerTitle} />
+  //     <ProductList></ProductList>
+  //   </div>
+  // );
+
+  return <Counter />;
 }
 
 /**
