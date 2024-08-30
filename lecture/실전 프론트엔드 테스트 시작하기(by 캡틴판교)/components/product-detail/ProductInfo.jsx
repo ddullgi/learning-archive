@@ -1,7 +1,7 @@
-import Image from 'next/image';
-import styles from './ProductInfo.module.css';
-import { useRouter } from 'next/router';
-import { createCartItem } from '@/api';
+import Image from "next/image";
+import styles from "./ProductInfo.module.css";
+import { useRouter } from "next/router";
+import { createCartItem } from "@/api";
 
 export default function ProductInfo({ productDetail }) {
   const router = useRouter();
@@ -11,9 +11,9 @@ export default function ProductInfo({ productDetail }) {
     // 1. 장바구니에 아이템을 담는 API 함수 호출
     const response = await createCartItem(productDetail);
     console.log(response);
-    alert('장바구니에 추가됨');
+    alert("장바구니에 추가됨");
     // 2. 장바구니 페이지로 이동
-    router.push('/cart');
+    router.push("/cart");
   };
 
   return (
