@@ -1,16 +1,17 @@
-import axios from 'axios';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import styles from './ProductList.module.css';
-import Link from 'next/link';
-import { fetchProducts } from '@/api';
+/* eslint-disable prettier/prettier */
+import axios from "axios";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import styles from "./ProductList.module.css";
+import Link from "next/link";
+import { fetchProducts } from "@/api";
 // import { fetchProducts } from '@/api/index';
 
 function ProductList() {
   const [products, setProducts] = useState();
 
   useEffect(() => {
-    fetchProducts().then(response => {
+    fetchProducts().then((response) => {
       setProducts(response.data);
     });
   }, []);
@@ -20,9 +21,9 @@ function ProductList() {
   return (
     <ul>
       {products &&
-        products.map(product => {
+        products.map((product) => {
           return (
-            <li key={product.id} className={styles.item}>
+            <li data-cy="product-item" key={product.id} className={styles.item}>
               <Link href={`/products/${product.id}`}>
                 <div>
                   {/* <img src="" alt="" /> */}
