@@ -1,3 +1,5 @@
+const { TREE_PRODUCT_ITEMS } = require("../fixtures");
+
 describe("상품 목록 페이지", () => {
   beforeEach(() => {
     cy.visit("/");
@@ -36,5 +38,16 @@ describe("상품 목록 페이지", () => {
     cy.get("[data-cy=product-header]")
       .contains("상품 상세 페이지!!")
       .should("be.visible");
+  });
+
+  // 네 번째 테스트 시나리오 - API 모킹
+  it.only("상품 목록이 3개면 화면에 3개 상품이 표시된다.", () => {
+    // prepare & action
+    cy.intercept("/products", TREE_PRODUCT_ITEMS).as("getProducts");
+    cy.visit("/");
+    cy.wait("@getProducts");
+
+    // assertion
+    cy.get("[data-cy=product-item]").should("have.length", 3);
   });
 });

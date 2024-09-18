@@ -9,6 +9,9 @@ module.exports = {
     // 선언되지 않은 변수 또는 임포트 구문 정리 규칙
     "no-undef": "error",
 
+    // 싸이프레스 관련 규칙
+    "cypress/unsafe-to-chain-command": "off",
+
     // 프리티어 설정
     "prettier/prettier": [
       "error",
