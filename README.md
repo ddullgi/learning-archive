@@ -13,6 +13,10 @@
 
 - [모던 리액트 Deep Dive](books/모던%20리액트%20Deep%20Dive/README.md) by 김용찬
 
+## 스터디
+
+- [SEO 스터디](study/SEO%20study/SEO.md)
+
 ## 자격증 공부
 
 - [리눅스 마스터 2급](certificate/리눅스%20마스터%202급/README.md)
