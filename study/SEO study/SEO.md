@@ -167,3 +167,84 @@ URL 리다이렉트은 기존 URL을 다른 URL과 연결 지어 방문자와 Go
 - 스크롤을 통해 새 데이터가 로딩되면 URL이 변화되게(`?page=x`) 설정
   - 링크를 따라가면 검색엔진은 특정 페이지에 대해 명시적으로 접근하기 쉬워짐
 - 각 페이지의 중복 여부를 확인
+
+## 링크 및 URL의 중복 등 구조적 요소
+
+### URL
+
+#### 타겟 키워드 부여
+
+- 최대한 각 페이지 URL은 한국어 및 숫자보다는 **영어**로 설정한다
+- 영어로 컨텐츠 내용과 일치하는 의미를 표현하는 URL을 작성한다
+
+#### 가독성 확보
+
+- 아래 형식의 파일명∙디렉토리명은 피한다
+  - 랜덤한 영숫자
+  - page1.html
+  - 매우 긴 url
+  - 너무 깊은 카테고리 구조
+    - 최대 2계층 권장
+  - 언더바 포함 - 구글 광고를 구별할때 URL에 언더바를 사용하여 구별한다.
+    ![URL 권장하지 않는 밑줄(_)](<./image/URL%20권장하지%20않는%20밑줄(_).png>)
+  - 스페이스 없는 영단어
+    ![URL 권장하지 않는 단어](./image/URL%20권장하지%20않는%20단어.png)
+- 특별한 사유에 의해서 영어 이외 **현지언어**로 된 단어를 사용할 경우 **UTF-8**로 인코딩한다
+- 참고자료
+  - [Google의 URL 구조 권장사항](https://developers.google.com/search/docs/crawling-indexing/url-structure?visit_id=638437376640496130-3890034512&rd=1&hl=ko)
+
+#### 컨텐츠가 바뀌었는데 URL이 변경 안되는 경우(get/post. AJAX, JS, etc...)
+
+**CSR을 사용하는 경우 클릭에 의해 컨텐츠가 전환되었지만, URL이 변하지 않는 경우가 있다.**
+
+**→ 크롤러가 전환된 컨텐츠를 이해하지 못해서 크롤러빌리티가 떨어지게 됨**
+
+### 체크방법
+
+- 구글 검색에 전환된 컨텐츠에 포함된 텍스트를 `“”` 로 둘러싸서 검색(완전 일치 검색)
+  - 검색 결과의 인덱스도 체크
+
+[자바스크립트 검색 엔진 최적화의 기본사항 이해하기](https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics?visit_id=638437403321478396-2503779199&rd=1&hl=ko)
+
+### 내부 링크 구조
+
+#### 내부 링크 구조(페이지 구조) 최적화
+
+- Category와 Category에서 이동한 내부 페이지의 URL이 계층 구조인지 확인
+  - Category에서 이동한 페이지는 Category의 하위경로를 따라야 함
+- Category 페이지가 존재하는지 확인
+  - 세부 카테고리 페이지는 있으나 카테고리 페이지가 없는 경우가 존재
+  - ex) `www.ex.com/category/news` 페이지는 존재
+  - ex) `www.ex.com/category` 페이지는 없는 경우가 많음
+
+[링크 보고서](https://support.google.com/webmasters/answer/9049606?hl=ko)
+
+#### 내부 링크를 기반으로 한 디렉토리리 구조 최적화
+
+- Top → Category → 상세페이지와 같은 **부모-자식** 구조 여부 확인
+- [Breadcrumbs](https://developers.google.com/search/docs/appearance/structured-data/breadcrumb?hl=ko&sjid=12339849054891630779-AP)를 사용하여 사이트 계층 구조로 만들어진 여부를 확인
+  ![브레드크럼](./image/브레드크럼.png)
+
+### 중복 배제
+
+#### 세션 파라미터 및 캠페인 파라미터 처리
+
+- **광고**로부터의 유입 등으로 파라미터가 포함된 URL이 있는 경우, **Canonical**로 **본래 URL**을 지정한다.
+  - 광고를 통해 사이트에 유입된 경우 URL에 파라미터가 포함되게 된다.
+  - 이 경우 파라미터에 의해 같은 내용의 페이지가 중복으로 존재하게 된다.
+  - 중복 회피를 위해서 **Canonical**로 같은 내용의 다른 URL의 페이지를 하나의 페이지로 인식하게 설정한다.
+- 참고자료
+  - [rel=“cannonical” 및 다른 메서드로 표준 URL을 지정하는 방법](https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls?visit_id=638437406034969353-32627999&rd=1&hl=ko)
+
+#### 알람 페이지 중복 회피 | 범위 선택 및 정렬 페이지의 정규화
+
+- **범위선택** 및 **재배치** 시, URL은 변경되어야 한다.
+  - 쇼핑 사이트에 경우 옵션의 색상 등의 변경에 의해 URL이 변경되는 것이 권장된다.
+  - 옵션에 따라 URL이 변경되면 구글의 표시되는 상품수가 늘어나 상품수 경쟁에서 우위를 가짐
+- 이 경우에 **URL 변경**시 **Canonical URL** 까지 함께 변경된다면 NG이다.
+  - **Canonical URL**은 상품의 기본 URL로 설정해놔야 크롤러가 중복 페이지로 인식하지 않는다.
+
+#### 상세페이지 중복회피 | 색상 차이, 모델 번호 차이 페이지 정규화
+
+- 색상차이, 품번차이 있는 상품의 경우 메인페이지로 Canonical
+  ![색상 품번 canonical 설정](./image/색상%20품번%20canonical%20설정.png)
