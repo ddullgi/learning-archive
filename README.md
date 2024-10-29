@@ -20,3 +20,7 @@
 ## 자격증 공부
 
 - [리눅스 마스터 2급](certificate/리눅스%20마스터%202급/README.md)
+
+## 유용한 글 정리
+
+- [SEO](article/README.md#seo)
