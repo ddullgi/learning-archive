@@ -1,3 +1,5 @@
-const App = () => <>1-react</>;
+import ProductPage from "./pages/ProductPage";
+
+const App = () => <ProductPage />;
 
 export default App;
