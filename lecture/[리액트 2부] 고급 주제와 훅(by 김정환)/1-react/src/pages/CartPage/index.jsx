@@ -13,6 +13,7 @@ class CartPage extends React.Component {
     this.state = {
       product: null,
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   async componentDidMount() {
@@ -28,6 +29,10 @@ class CartPage extends React.Component {
     }
   }
 
+  handleSubmit(values) {
+    console.log("[CartPage]", values);
+  }
+
   render() {
     const { product } = this.state;
     return (
@@ -37,7 +42,7 @@ class CartPage extends React.Component {
           footer={<PaymentButton />}
         >
           {product && <ProductItem product={product} />}
-          <OrderForm />
+          <OrderForm onSubmit={this.handleSubmit} />
         </Page>
       </div>
     );
