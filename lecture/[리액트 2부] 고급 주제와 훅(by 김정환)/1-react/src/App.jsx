@@ -1,3 +1,4 @@
+import createEventEmitter from "shared/lib/EventEmitter";
 import CartPage from "./pages/CartPage";
 import OrderPage from "./pages/OrderPage";
 import ProductPage from "./pages/ProductPage";
@@ -35,3 +36,13 @@ export default App;
 // }
 
 // export default MyComponent;
+
+const eventEmitter = createEventEmitter(0);
+const loger = (value) => console.log(value);
+
+eventEmitter.on(loger);
+console.log(eventEmitter.get());
+eventEmitter.set(1);
+eventEmitter.set(2);
+
+setTimeout(() => eventEmitter.set(10), 3000);
