@@ -10,7 +10,7 @@ const App = () => {
   );
 };
 
-// export default App;
+export default App;
 
 //? ref 학습
 // import React from "react";
@@ -52,59 +52,59 @@ const App = () => {
 
 //? 컨텍스트 학습
 
-import MyReact from "./lib/MyReact";
-import React from "react";
+// import MyReact from "./lib/MyReact";
+// import React from "react";
 
-const counterContext = MyReact.createContext({
-  count: 0,
-  setCount: () => {},
-});
+// const counterContext = MyReact.createContext({
+//   count: 0,
+//   setCount: () => {},
+// });
 
-class CountProvider extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      count: 0,
-    };
-  }
+// class CountProvider extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       count: 0,
+//     };
+//   }
 
-  render() {
-    const value = {
-      count: this.state.count,
-      setCount: (nextValue) => this.setState({ count: nextValue }),
-    };
+//   render() {
+//     const value = {
+//       count: this.state.count,
+//       setCount: (nextValue) => this.setState({ count: nextValue }),
+//     };
 
-    return (
-      <counterContext.Provider value={value}>
-        {this.props.children}
-      </counterContext.Provider>
-    );
-  }
-}
+//     return (
+//       <counterContext.Provider value={value}>
+//         {this.props.children}
+//       </counterContext.Provider>
+//     );
+//   }
+// }
 
-const Count = () => {
-  return (
-    <counterContext.Consumer>
-      {(value) => <div>{value.count}</div>}
-    </counterContext.Consumer>
-  );
-};
+// const Count = () => {
+//   return (
+//     <counterContext.Consumer>
+//       {(value) => <div>{value.count}</div>}
+//     </counterContext.Consumer>
+//   );
+// };
 
-const PlussButton = () => {
-  return (
-    <counterContext.Consumer>
-      {(value) => (
-        <button onClick={() => value.setCount(value.count + 1)}>
-          + 카운트 올리기
-        </button>
-      )}
-    </counterContext.Consumer>
-  );
-};
+// const PlussButton = () => {
+//   return (
+//     <counterContext.Consumer>
+//       {(value) => (
+//         <button onClick={() => value.setCount(value.count + 1)}>
+//           + 카운트 올리기
+//         </button>
+//       )}
+//     </counterContext.Consumer>
+//   );
+// };
 
-export default () => (
-  <CountProvider>
-    <Count />
-    <PlussButton />
-  </CountProvider>
-);
+// export default () => (
+//   <CountProvider>
+//     <Count />
+//     <PlussButton />
+//   </CountProvider>
+// );
