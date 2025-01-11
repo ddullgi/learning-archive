@@ -1,18 +1,14 @@
 import React from "react";
 
-import CartPage from "../pages/CartPage";
-import OrderPage from "../pages/OrderPage";
-import ProductPage from "../pages/ProductPage";
-
 export const routerContext = React.createContext({});
 routerContext.displayName = "RouterContext";
 
 export const Link = ({ to, ...rest }) => (
   <routerContext.Consumer>
-    {({ path, channgePath }) => {
+    {({ path, changePath }) => {
       const handleClick = (e) => {
         e.preventDefault();
-        if (to !== path) channgePath(to);
+        if (to !== path) changePath(to);
       };
 
       return <a {...rest} href={to} onClick={handleClick} />;
@@ -27,16 +23,33 @@ export class Router extends React.Component {
       path: window.location.pathname,
     };
     this.handleChangePath = this.handleChangePath.bind(this);
+    this.handleOnPopState = this.handleOnPopState.bind(this);
   }
 
   handleChangePath(path) {
     this.setState({ path });
+    window.history.pushState({ path }, "", path);
+  }
+
+  handleOnPopState = (e) => {
+    const nextPath = e.state && e.state.path;
+    if (!nextPath) return;
+    this.setState({ path: nextPath });
+  };
+
+  componentDidMount() {
+    window.addEventListener("popstate", this.handleOnPopState);
+    window.history.replaceState({ path: this.state.path }, "");
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("popstate", this.handleOnPopState);
   }
 
   render() {
     const contextValue = {
       path: this.state.path,
-      channgePath: this.handleChangePath,
+      changePath: this.handleChangePath,
     };
     return (
       <routerContext.Provider value={contextValue}>
