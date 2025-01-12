@@ -1,6 +1,6 @@
 import React from "react";
 import ProductApi from "shared/api/ProductApi";
-
+import * as MyRouter from "../../lib/MyRouter";
 import Page from "../../components/Page";
 import ProductItem from "../../components/ProductItem";
 import Title from "../../components/Title";
@@ -21,8 +21,10 @@ class CartPage extends React.Component {
   }
 
   async fetch() {
+    const { productId } = this.props.params();
+    console.log(productId);
     try {
-      const product = await ProductApi.fetchProduct("CACDA421");
+      const product = await ProductApi.fetchProduct(productId);
       this.setState({ product });
     } catch (e) {
       console.error(e);
@@ -31,6 +33,10 @@ class CartPage extends React.Component {
 
   handleSubmit(values) {
     console.log("[CartPage]", values);
+
+    // TODO: 결제 성공후
+
+    this.props.navigate("/");
   }
 
   render() {
@@ -49,4 +55,4 @@ class CartPage extends React.Component {
   }
 }
 
-export default CartPage;
+export default MyRouter.withRouter(CartPage);
