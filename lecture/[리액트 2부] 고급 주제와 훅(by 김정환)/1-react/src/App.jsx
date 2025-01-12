@@ -14,7 +14,7 @@ const App = () => (
   </MyRouter.Router>
 );
 
-// export default App;
+export default App;
 
 //? ref 학습
 {
@@ -105,53 +105,46 @@ const App = () => (
 }
 
 //? 고차 컴포넌트 학습
-import React from "react";
-
-class Header extends React.Component {
-  render() {
-    return <header>Header</header>;
-  }
+{
+  // import React from "react";
+  // class Header extends React.Component {
+  //   render() {
+  //     return <header>Header</header>;
+  //   }
+  // }
+  // class Button extends React.Component {
+  //   handleClick = () => {
+  //     this.props.log("클릭");
+  //   };
+  //   render() {
+  //     return <button onClick={this.handleClick}>버튼</button>;
+  //   }
+  // }
+  // const withLogging = (WrappedCompent) => {
+  //   function log(message) {
+  //     console.log(`[${getComponentName(WrappedCompent)}] ${message}`);
+  //   }
+  //   class WithLoging extends React.Component {
+  //     componentDidMount() {
+  //       log("마운트");
+  //     }
+  //     render() {
+  //       const enhancedProps = {
+  //         log,
+  //       };
+  //       return <WrappedCompent {...this.props} {...enhancedProps} />;
+  //     }
+  //   }
+  //   return WithLoging;
+  // };
+  // const EnhancedHeader = withLogging(Header);
+  // const EnhancedButton = withLogging(Button);
+  // export default () => {
+  //   return (
+  //     <div>
+  //       <EnhancedHeader />
+  //       <EnhancedButton />
+  //     </div>
+  //   );
+  // };
 }
-
-class Button extends React.Component {
-  handleClick = () => {
-    this.props.log("클릭");
-  };
-
-  render() {
-    return <button onClick={this.handleClick}>버튼</button>;
-  }
-}
-
-const withLogging = (WrappedCompent) => {
-  function log(message) {
-    console.log(`[${getComponentName(WrappedCompent)}] ${message}`);
-  }
-
-  class WithLoging extends React.Component {
-    componentDidMount() {
-      log("마운트");
-    }
-
-    render() {
-      const enhancedProps = {
-        log,
-      };
-      return <WrappedCompent {...this.props} {...enhancedProps} />;
-    }
-  }
-
-  return WithLoging;
-};
-
-const EnhancedHeader = withLogging(Header);
-const EnhancedButton = withLogging(Button);
-
-export default () => {
-  return (
-    <div>
-      <EnhancedHeader />
-      <EnhancedButton />
-    </div>
-  );
-};
