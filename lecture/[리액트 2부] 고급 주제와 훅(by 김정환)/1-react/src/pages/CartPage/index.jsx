@@ -1,6 +1,7 @@
 import React from "react";
 import ProductApi from "shared/api/ProductApi";
 import * as MyRouter from "../../lib/MyRouter";
+import * as MyLayout from "../../lib/MyLayout";
 import Page from "../../components/Page";
 import ProductItem from "../../components/ProductItem";
 import Title from "../../components/Title";
@@ -21,11 +22,15 @@ class CartPage extends React.Component {
   }
 
   async fetch() {
-    const { productId } = this.props.params();
-    console.log(productId);
+    const { params, startLoading, finishLoading } = this.props;
+    const { productId } = params();
+    if (!productId) return;
+
+    startLoading("장바구니 로딩중...");
     try {
       const product = await ProductApi.fetchProduct(productId);
       this.setState({ product });
+      finishLoading();
     } catch (e) {
       console.error(e);
     }
@@ -55,4 +60,4 @@ class CartPage extends React.Component {
   }
 }
 
-export default MyRouter.withRouter(CartPage);
+export default MyLayout.withLayout(MyRouter.withRouter(CartPage));

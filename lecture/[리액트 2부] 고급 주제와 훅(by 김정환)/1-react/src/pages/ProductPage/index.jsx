@@ -1,5 +1,6 @@
 import React from "react";
 import ProductApi from "shared/api/ProductApi";
+import * as MyLayout from "../../lib/MyLayout";
 
 import Navbar from "../../components/Navbar";
 import Page from "../../components/Page";
@@ -19,9 +20,12 @@ class ProductPage extends React.Component {
   }
 
   async fetch() {
+    const { startLoading, finishLoading } = this.props;
+    startLoading("메뉴 목록 로딩중...");
     try {
       const productList = await ProductApi.fetchProductList();
       this.setState({ productList });
+      finishLoading();
     } catch (e) {
       console.error(e);
     }
@@ -44,4 +48,4 @@ class ProductPage extends React.Component {
   }
 }
 
-export default ProductPage;
+export default MyLayout.withLayout(ProductPage);
