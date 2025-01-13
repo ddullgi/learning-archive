@@ -1,9 +1,9 @@
-const Dialog = () => {
+const Dialog = ({ header, children, footer }) => {
   return (
     <div className="Dialog">
-      <header>header</header>
-      <main>main</main>
-      <footer>footer</footer>
+      {header && <header>{header}</header>}
+      <main>{children}</main>
+      {footer && <footer>{footer}</footer>}
     </div>
   );
 };

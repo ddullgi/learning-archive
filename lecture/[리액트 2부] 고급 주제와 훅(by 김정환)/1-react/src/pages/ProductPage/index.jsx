@@ -6,7 +6,6 @@ import Navbar from "../../components/Navbar";
 import Page from "../../components/Page";
 import Title from "../../components/Title";
 import OrderableProductItem from "./OrderableProductItem";
-import Dialog from "../../components/Dialog";
 
 class ProductPage extends React.Component {
   constructor(props) {
@@ -21,12 +20,12 @@ class ProductPage extends React.Component {
   }
 
   async fetch() {
-    const { openDialog, closeDialog } = this.props;
-    openDialog(<Dialog />);
+    const { startLoading, finishLoading } = this.props;
+    startLoading("메뉴 목록 로딩중...");
     try {
       const productList = await ProductApi.fetchProductList();
       this.setState({ productList });
-      closeDialog();
+      finishLoading();
     } catch (e) {
       console.error(e);
     }

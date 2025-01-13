@@ -1,5 +1,6 @@
 import React from "react";
 import OrderApi from "shared/api/OrderApi";
+import * as MyLayout from "../../lib/MyLayout";
 
 import Navbar from "../../components/Navbar";
 import Page from "../../components/Page";
@@ -21,9 +22,12 @@ class OrderPage extends React.Component {
   }
 
   async fetch() {
+    const { startLoading, finishLoading } = this.props;
+    startLoading("주문 내역 로딩중...");
     try {
       const order = await OrderApi.fetchMyOrder();
       this.setState({ order });
+      finishLoading();
     } catch (e) {
       console.error(e);
     }
@@ -47,4 +51,4 @@ class OrderPage extends React.Component {
   }
 }
 
-export default OrderPage;
+export default MyLayout.withLayout(OrderPage);
