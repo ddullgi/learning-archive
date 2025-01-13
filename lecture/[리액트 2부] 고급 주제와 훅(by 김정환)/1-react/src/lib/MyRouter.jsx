@@ -90,7 +90,7 @@ export const Routes = ({ children }) => (
 export const Route = () => null;
 
 export const withRouter = (WrappedComponent) => {
-  const withRouter = (props) => (
+  const WithRouter = (props) => (
     <routerContext.Consumer>
       {({ path, changePath }) => {
         const navigate = (nextPath) => {
@@ -118,7 +118,7 @@ export const withRouter = (WrappedComponent) => {
       }}
     </routerContext.Consumer>
   );
-  withRouter.displayName = `withRouter(${getComponentName(WrappedComponent)})`;
+  WithRouter.displayName = `withRouter(${getComponentName(WrappedComponent)})`;
 
-  return withRouter;
+  return WithRouter;
 };

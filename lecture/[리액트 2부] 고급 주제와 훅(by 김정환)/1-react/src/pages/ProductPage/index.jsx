@@ -1,10 +1,12 @@
 import React from "react";
 import ProductApi from "shared/api/ProductApi";
+import * as MyLayout from "../../lib/MyLayout";
 
 import Navbar from "../../components/Navbar";
 import Page from "../../components/Page";
 import Title from "../../components/Title";
 import OrderableProductItem from "./OrderableProductItem";
+import Dialog from "../../components/Dialog";
 
 class ProductPage extends React.Component {
   constructor(props) {
@@ -19,9 +21,12 @@ class ProductPage extends React.Component {
   }
 
   async fetch() {
+    const { openDialog, closeDialog } = this.props;
+    openDialog(<Dialog />);
     try {
       const productList = await ProductApi.fetchProductList();
       this.setState({ productList });
+      closeDialog();
     } catch (e) {
       console.error(e);
     }
@@ -44,4 +49,4 @@ class ProductPage extends React.Component {
   }
 }
 
-export default ProductPage;
+export default MyLayout.withLayout(ProductPage);
