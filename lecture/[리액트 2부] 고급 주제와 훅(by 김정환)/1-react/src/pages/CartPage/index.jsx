@@ -7,6 +7,7 @@ import ProductItem from "../../components/ProductItem";
 import Title from "../../components/Title";
 import OrderForm from "./OrderFrom";
 import PaymentButton from "./PaymentButton";
+import ErrorDialog from "../../components/ErrorDialog";
 
 class CartPage extends React.Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class CartPage extends React.Component {
   }
 
   async fetch() {
-    const { params, startLoading, finishLoading } = this.props;
+    const { params, startLoading, finishLoading, openDialog } = this.props;
     const { productId } = params();
     if (!productId) return;
 
@@ -30,10 +31,11 @@ class CartPage extends React.Component {
     try {
       const product = await ProductApi.fetchProduct(productId);
       this.setState({ product });
-      finishLoading();
     } catch (e) {
-      console.error(e);
+      openDialog(<ErrorDialog />);
+      return;
     }
+    finishLoading();
   }
 
   handleSubmit(values) {
