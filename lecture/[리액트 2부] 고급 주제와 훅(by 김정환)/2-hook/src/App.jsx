@@ -46,13 +46,15 @@
   // contract2.sign();
 }
 
-import React from "react";
+import MyReact from "./lib/MyReact";
 
 function NameField() {
-  const name = "사용자1";
-  const handleChange = () => {};
+  const [firstname, setFirstname] = MyReact.useName("사용자1");
+  const handleChange = (e) => {
+    setFirstname(e.target.value);
+  };
 
-  return <input value={name} onChange={handleChange} />;
+  return <input value={firstname} onChange={handleChange} />;
 }
 
 export default () => <NameField />;

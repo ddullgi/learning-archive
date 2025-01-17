@@ -1,8 +1,12 @@
+import { useState } from "react";
+
 const MyReact = (function MyReact() {
   let firstName;
   let isInitialized = false;
 
   function useName(initialValue = "") {
+    const { forceUpdate } = useForceUpdate();
+
     if (!isInitialized) {
       firstName = initialValue;
       isInitialized = true;
@@ -15,6 +19,12 @@ const MyReact = (function MyReact() {
     };
 
     return [firstName, setFirstname];
+  }
+
+  function useForceUpdate() {
+    const [value, setValue] = useState(1);
+    const forceUpdate = () => setValue(value + 1);
+    return { forceUpdate };
   }
 
   return { useName };
