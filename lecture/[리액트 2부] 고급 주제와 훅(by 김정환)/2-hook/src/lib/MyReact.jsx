@@ -1,33 +1,43 @@
-import { useState } from "react";
+import React from "react";
 
 const MyReact = (function MyReact() {
-  let firstName;
-  let isInitialized = false;
+  const isInitialized = [];
+  const memorizedStates = [];
+  let cusor = 0;
 
-  function useName(initialValue = "") {
+  function useState(initialValue = "") {
     const { forceUpdate } = useForceUpdate();
 
-    if (!isInitialized) {
-      firstName = initialValue;
-      isInitialized = true;
+    if (!isInitialized[cusor]) {
+      memorizedStates[cusor] = initialValue;
+      isInitialized[cusor] = true;
     }
 
-    const setFirstname = (value) => {
-      if (firstName === value) return;
-      firstName = value;
+    const state = memorizedStates[cusor];
+
+    const setStateAt = (_cusor) => (nextState) => {
+      if (state === nextState) return;
+      memorizedStates[_cusor] = nextState;
       forceUpdate();
     };
 
-    return [firstName, setFirstname];
+    const setState = setStateAt(cusor);
+
+    cusor = cusor + 1;
+
+    return [state, setState];
   }
 
   function useForceUpdate() {
-    const [value, setValue] = useState(1);
-    const forceUpdate = () => setValue(value + 1);
+    const [value, setValue] = React.useState(1);
+    const forceUpdate = () => {
+      setValue(value + 1);
+      cusor = 0;
+    };
     return { forceUpdate };
   }
 
-  return { useName };
+  return { useState };
 })();
 
 export default MyReact;
