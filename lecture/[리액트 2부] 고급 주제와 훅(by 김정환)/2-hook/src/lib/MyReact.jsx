@@ -11,6 +11,7 @@ const MyReact = (function MyReact() {
     const setFirstname = (value) => {
       if (firstName === value) return;
       firstName = value;
+      forceUpdate();
     };
 
     return [firstName, setFirstname];
