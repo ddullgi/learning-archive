@@ -2,52 +2,69 @@
 
 // export default App;
 
-import React from "react";
-
-function Contract(props) {
-  const sign = () => {
-    setTimeout(() => console.log("서명인: ", props.name), 3000);
-  };
-
-  return <button onClick={sign}>서명</button>;
+//? 함수 클래스 비교
+{
+  // import React from "react";
+  // function Contract(props) {
+  //   const sign = () => {
+  //     setTimeout(() => console.log("서명인: ", props.name), 3000);
+  //   };
+  //   return <button onClick={sign}>서명</button>;
+  // }
+  // class App extends React.Component {
+  //   constructor(props) {
+  //     super(props);
+  //     this.state = {
+  //       name: "사용자1",
+  //     };
+  //   }
+  //   handleChange(e) {
+  //     this.setState({ name: e.target.value });
+  //   }
+  //   render() {
+  //     return (
+  //       <>
+  //         <select value={this.state.name} onChange={this.handleChange.bind(this)}>
+  //           <option value="사용자1">사용자1</option>
+  //           <option value="사용자2">사용자2</option>
+  //         </select>
+  //         <Contract name={this.state.name} />
+  //       </>
+  //     );
+  //   }
+  // }
+  // export default App;
+  // function createContract(name) {
+  //   const sign = () => {
+  //     setTimeout(() => console.log("서명인: ", name), 3000);
+  //   };
+  //   return {
+  //     sign,
+  //   };
+  // }
+  // const contract2 = createContract("사용자 3");
+  // contract2.sign();
 }
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: "사용자1",
-    };
-  }
+import MyReact from "./lib/MyReact";
 
-  handleChange(e) {
-    this.setState({ name: e.target.value });
-  }
-
-  render() {
-    return (
-      <>
-        <select value={this.state.name} onChange={this.handleChange.bind(this)}>
-          <option value="사용자1">사용자1</option>
-          <option value="사용자2">사용자2</option>
-        </select>
-        <Contract name={this.state.name} />
-      </>
-    );
-  }
-}
-
-export default App;
-
-function createContract(name) {
-  const sign = () => {
-    setTimeout(() => console.log("서명인: ", name), 3000);
+function NameField() {
+  const [firstname, setFirstname] = MyReact.useState("사용자1");
+  const [lastname, setLastname] = MyReact.useState("김");
+  const handleChangeFirstname = (e) => {
+    setFirstname(e.target.value);
   };
 
-  return {
-    sign,
+  const handleChangeLastname = (e) => {
+    setLastname(e.target.value);
   };
+
+  return (
+    <>
+      <input value={firstname} onChange={handleChangeFirstname} />
+      <input value={lastname} onChange={handleChangeLastname} />
+    </>
+  );
 }
 
-const contract2 = createContract("사용자 3");
-contract2.sign();
+export default () => <NameField />;
