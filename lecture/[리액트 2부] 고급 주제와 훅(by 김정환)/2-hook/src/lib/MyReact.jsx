@@ -28,6 +28,7 @@ const MyReact = (function MyReact() {
     return [state, setState];
   }
 
+  // 구현을 위해 이곳만 리액트 훅을 사용한다.
   function useForceUpdate() {
     const [value, setValue] = React.useState(1);
     const forceUpdate = () => {
@@ -37,7 +38,16 @@ const MyReact = (function MyReact() {
     return { forceUpdate };
   }
 
-  return { useState };
+  function useEffect(effect) {
+    function runDedeferedEffect() {
+      const ENOUGH_TIME_TO_RENDER = 1000;
+      setTimeout(effect, ENOUGH_TIME_TO_RENDER);
+    }
+
+    runDedeferedEffect();
+  }
+
+  return { useState, useEffect };
 })();
 
 export default MyReact;
