@@ -2,7 +2,7 @@ import React from "react";
 
 const MyReact = (function MyReact() {
   const memorizedStates = [];
-  let dep;
+  const deps = [];
   const isInitialized = [];
   let cusor = 0;
 
@@ -41,23 +41,36 @@ const MyReact = (function MyReact() {
 
   function useEffect(effect, nextDep) {
     function runDedeferedEffect() {
-      const ENOUGH_TIME_TO_RENDER = 1000;
+      const ENOUGH_TIME_TO_RENDER = 100;
       setTimeout(effect, ENOUGH_TIME_TO_RENDER);
     }
 
     if (!isInitialized[cusor]) {
       isInitialized[cusor] = true;
-      dep = nextDep;
+      deps[cusor] = nextDep;
+      cusor = cusor + 1;
       runDedeferedEffect();
       return;
     }
 
-    if (dep === nextDep) return;
-    dep = nextDep;
+    const prevDep = deps[cusor];
+
+    if (prevDep === nextDep) {
+      deps[cusor] = nextDep;
+      cusor = cusor + 1;
+      return;
+    }
+
+    deps[cusor] = nextDep;
+    cusor = cusor + 1;
     runDedeferedEffect();
   }
 
-  return { useState, useEffect };
+  function resetCursor() {
+    cusor = 0;
+  }
+
+  return { useState, useEffect, resetCursor };
 })();
 
 export default MyReact;
