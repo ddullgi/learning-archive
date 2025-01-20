@@ -75,7 +75,7 @@ const Counter = () => {
   MyReact.resetCursor();
 
   const [count, setCount] = React.useState(0);
-  const [name, setName] = React.useState(localStorage.getItem("name") || "");
+  const [name, setName] = React.useState("");
 
   const handleClick = () => setCount(count + 1);
 
@@ -84,14 +84,24 @@ const Counter = () => {
   };
 
   MyReact.useEffect(() => {
-    document.title = `count: ${count}`;
+    document.title = `count: ${count} | name: ${name}`;
     console.log("effect1");
-  }, count);
+
+    return function cleanup() {
+      document.title = "";
+      console.log("effect1 cleanup");
+    };
+  }, [count, name]);
 
   MyReact.useEffect(() => {
     localStorage.setItem("name", name);
     console.log("effect2");
-  }, name);
+  }, [name]);
+
+  MyReact.useEffect(() => {
+    setName(localStorage.getItem("name") || "");
+    console.log("effect3");
+  }, []);
 
   console.log("Counter rendered");
 

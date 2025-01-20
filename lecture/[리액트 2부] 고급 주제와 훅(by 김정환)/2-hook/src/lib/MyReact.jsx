@@ -4,6 +4,7 @@ const MyReact = (function MyReact() {
   const memorizedStates = [];
   const deps = [];
   const isInitialized = [];
+  const cleanpus = [];
   let cusor = 0;
 
   function useState(initialValue = "") {
@@ -39,29 +40,36 @@ const MyReact = (function MyReact() {
     return { forceUpdate };
   }
 
-  function useEffect(effect, nextDep) {
+  function useEffect(effect, nextDeps) {
     function runDedeferedEffect() {
-      const ENOUGH_TIME_TO_RENDER = 100;
-      setTimeout(effect, ENOUGH_TIME_TO_RENDER);
+      function runEffect() {
+        const cleanup = effect();
+        if (cleanup) cleanpus[cusor] = cleanup;
+      }
+
+      const ENOUGH_TIME_TO_RENDER = 1;
+      setTimeout(runEffect, ENOUGH_TIME_TO_RENDER);
     }
 
     if (!isInitialized[cusor]) {
       isInitialized[cusor] = true;
-      deps[cusor] = nextDep;
+      deps[cusor] = nextDeps;
       cusor = cusor + 1;
       runDedeferedEffect();
       return;
     }
 
-    const prevDep = deps[cusor];
+    const prevDeps = deps[cusor];
+    const depsSame = prevDeps.every(
+      (prevDep, index) => prevDep === nextDeps[index]
+    );
 
-    if (prevDep === nextDep) {
-      deps[cusor] = nextDep;
+    if (depsSame) {
       cusor = cusor + 1;
       return;
     }
 
-    deps[cusor] = nextDep;
+    deps[cusor] = nextDeps;
     cusor = cusor + 1;
     runDedeferedEffect();
   }
