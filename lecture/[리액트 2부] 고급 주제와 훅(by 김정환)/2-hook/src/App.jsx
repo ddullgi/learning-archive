@@ -113,4 +113,18 @@ const Counter = () => {
   );
 };
 
-export default Counter;
+export default () => {
+  const [mounted, setMounted] = React.useState(false);
+  const handleToggle = () => {
+    const nextMounted = !mounted;
+    if (!nextMounted) MyReact.cleanupEffects();
+    setMounted(nextMounted);
+  };
+
+  return (
+    <>
+      <button onClick={handleToggle}>컴포넌트 토글</button>
+      {mounted && <Counter />}
+    </>
+  );
+};

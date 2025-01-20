@@ -78,7 +78,11 @@ const MyReact = (function MyReact() {
     cusor = 0;
   }
 
-  return { useState, useEffect, resetCursor };
+  function cleanupEffects() {
+    cleanpus.forEach((cleanup) => typeof cleanup === "function" && cleanup());
+  }
+
+  return { useState, useEffect, resetCursor, cleanupEffects };
 })();
 
 export default MyReact;
