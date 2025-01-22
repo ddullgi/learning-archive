@@ -1,7 +1,13 @@
+import CartPage from "./pages/CartPage";
 import ProductPage from "./pages/ProductPage";
 
 const App = () => {
-  return <ProductPage />;
+  return (
+    <>
+      {/* <ProductPage />; */}
+      <CartPage />
+    </>
+  );
 };
 
 export default App;
