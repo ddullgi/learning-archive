@@ -2,8 +2,9 @@ import React from "react";
 
 const MyReact = (function MyReact() {
   const memorizedStates = [];
-  let dep;
+  const deps = [];
   const isInitialized = [];
+  const cleanpus = [];
   let cusor = 0;
 
   function useState(initialValue = "") {
@@ -39,25 +40,49 @@ const MyReact = (function MyReact() {
     return { forceUpdate };
   }
 
-  function useEffect(effect, nextDep) {
+  function useEffect(effect, nextDeps) {
     function runDedeferedEffect() {
-      const ENOUGH_TIME_TO_RENDER = 1000;
-      setTimeout(effect, ENOUGH_TIME_TO_RENDER);
+      function runEffect() {
+        const cleanup = effect();
+        if (cleanup) cleanpus[cusor] = cleanup;
+      }
+
+      const ENOUGH_TIME_TO_RENDER = 1;
+      setTimeout(runEffect, ENOUGH_TIME_TO_RENDER);
     }
 
     if (!isInitialized[cusor]) {
       isInitialized[cusor] = true;
-      dep = nextDep;
+      deps[cusor] = nextDeps;
+      cusor = cusor + 1;
       runDedeferedEffect();
       return;
     }
 
-    if (dep === nextDep) return;
-    dep = nextDep;
+    const prevDeps = deps[cusor];
+    const depsSame = prevDeps.every(
+      (prevDep, index) => prevDep === nextDeps[index]
+    );
+
+    if (depsSame) {
+      cusor = cusor + 1;
+      return;
+    }
+
+    deps[cusor] = nextDeps;
+    cusor = cusor + 1;
     runDedeferedEffect();
   }
 
-  return { useState, useEffect };
+  function resetCursor() {
+    cusor = 0;
+  }
+
+  function cleanupEffects() {
+    cleanpus.forEach((cleanup) => typeof cleanup === "function" && cleanup());
+  }
+
+  return { useState, useEffect, resetCursor, cleanupEffects };
 })();
 
 export default MyReact;

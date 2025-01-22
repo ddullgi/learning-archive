@@ -72,6 +72,8 @@ import React from "react";
 import MyReact from "./lib/MyReact";
 
 const Counter = () => {
+  MyReact.resetCursor();
+
   const [count, setCount] = React.useState(0);
   const [name, setName] = React.useState("");
 
@@ -82,9 +84,24 @@ const Counter = () => {
   };
 
   MyReact.useEffect(() => {
-    document.title = `count: ${count}`;
+    document.title = `count: ${count} | name: ${name}`;
     console.log("effect1");
-  }, count);
+
+    return function cleanup() {
+      document.title = "";
+      console.log("effect1 cleanup");
+    };
+  }, [count, name]);
+
+  MyReact.useEffect(() => {
+    localStorage.setItem("name", name);
+    console.log("effect2");
+  }, [name]);
+
+  MyReact.useEffect(() => {
+    setName(localStorage.getItem("name") || "");
+    console.log("effect3");
+  }, []);
 
   console.log("Counter rendered");
 
@@ -96,4 +113,18 @@ const Counter = () => {
   );
 };
 
-export default Counter;
+export default () => {
+  const [mounted, setMounted] = React.useState(false);
+  const handleToggle = () => {
+    const nextMounted = !mounted;
+    if (!nextMounted) MyReact.cleanupEffects();
+    setMounted(nextMounted);
+  };
+
+  return (
+    <>
+      <button onClick={handleToggle}>컴포넌트 토글</button>
+      {mounted && <Counter />}
+    </>
+  );
+};
