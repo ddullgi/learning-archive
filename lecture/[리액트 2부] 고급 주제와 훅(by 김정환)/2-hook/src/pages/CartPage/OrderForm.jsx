@@ -5,12 +5,11 @@ const OrderForm = ({ onSubmit }) => {
   const formRef = useRef();
 
   const getInputValueByName = (name) => {
-    if (!formRef.current) return;
-
-    const inputElement = formRef.current.elements.namedItem(name);
-    if (!inputElement) return "";
-
-    return inputElement.value;
+    // todo
+    // if (!formRef.current) return;
+    // const inputElement = formRef.current.elements.namedItem(name);
+    // if (!inputElement) return "";
+    // return inputElement.value;
   };
 
   const handleSubmit = (e) => {
@@ -35,7 +34,7 @@ const OrderForm = ({ onSubmit }) => {
     <form
       className="OrderForm"
       id="order-form"
-      ref={formRef}
+      // ref={formRef}
       onSubmit={handleSubmit}
     >
       <FormControl label="주소" htmlFor="deliveryAddress" required>
