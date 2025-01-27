@@ -1,4 +1,5 @@
 import React from "react";
+import { createEventEmitter } from "shared/lib/EventEmitter";
 
 const MyReact = (function MyReact() {
   const memorizedStates = [];
@@ -82,7 +83,39 @@ const MyReact = (function MyReact() {
     cleanpus.forEach((cleanup) => typeof cleanup === "function" && cleanup());
   }
 
-  return { useState, useEffect, resetCursor, cleanupEffects };
+  function createContext(initialValue) {
+    const emmiter = createEventEmitter(initialValue);
+
+    function Provider({ children, value }) {
+      React.useEffect(() => {
+        emmiter.set(value);
+      }, [value]);
+
+      return <>{children}</>;
+    }
+
+    return { Provider, emmiter };
+  }
+
+  function useContext(context) {
+    const [value, setValue] = React.useState(context.emmiter.get());
+
+    React.useEffect(() => {
+      context.emmiter.on(setValue);
+      return () => context.emmiter.off(setValue);
+    }, [context]);
+
+    return value;
+  }
+
+  return {
+    useState,
+    useEffect,
+    resetCursor,
+    cleanupEffects,
+    createContext,
+    useContext,
+  };
 })();
 
 export default MyReact;
