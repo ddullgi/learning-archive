@@ -80,3 +80,33 @@ export const Link = ({ to, ...rest }) => {
 
   return <a {...rest} href={to} onClick={handleClick} />;
 };
+
+export const useNavigate = () => {
+  const { path, changePath } = React.useContext(routerContext);
+  const navigate = (nextPath) => {
+    if (path !== nextPath) changePath(nextPath);
+  };
+
+  return navigate;
+};
+
+export const useMatch = () => {
+  const { path } = React.useContext(routerContext);
+  const match = (comparedPath) => path === comparedPath;
+
+  return match;
+};
+
+export const useParams = () => {
+  //* TODO: useMemo 사용해야야
+  const params = () => {
+    const params = new URLSearchParams(window.location.search);
+    const paramsObject = {};
+    for (const [key, value] of params) {
+      paramsObject[key] = value;
+    }
+    return paramsObject;
+  };
+
+  return params;
+};
