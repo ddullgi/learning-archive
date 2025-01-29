@@ -3,7 +3,7 @@ import React from "react";
 const routerContext = React.createContext({});
 routerContext.displayName = "RouterContext";
 
-export const Router = () => {
+export const Router = ({ children }) => {
   const [path, setPath] = React.useState(window.location.pathname);
 
   const changePath = (path) => {
@@ -33,7 +33,7 @@ export const Router = () => {
 
   return (
     <routerContext.Provider value={contextValue}>
-      {this.props.children}
+      {children}
     </routerContext.Provider>
   );
 };
@@ -98,15 +98,12 @@ export const useMatch = () => {
 };
 
 export const useParams = () => {
-  //* TODO: useMemo 사용해야야
-  const params = () => {
-    const params = new URLSearchParams(window.location.search);
-    const paramsObject = {};
-    for (const [key, value] of params) {
-      paramsObject[key] = value;
-    }
-    return paramsObject;
-  };
+  //* TODO: useMemo 사용해야
 
-  return params;
+  const params = new URLSearchParams(window.location.search);
+  const paramsObject = {};
+  for (const [key, value] of params) {
+    paramsObject[key] = value;
+  }
+  return paramsObject;
 };

@@ -1,18 +1,22 @@
+import * as MyRouter from "./lib/MyRouter";
+
 import CartPage from "./pages/CartPage";
 import OrderPage from "./pages/OrderPage";
 import ProductPage from "./pages/ProductPage";
 
-// const App = () => {
-//   return (
-//     <>
-//       {/* <ProductPage />; */}
-//       {/* <CartPage /> */}
-//       <OrderPage />
-//     </>
-//   );
-// };
+const App = () => {
+  return (
+    <MyRouter.Router>
+      <MyRouter.Routes>
+        <MyRouter.Route path="/" element={<ProductPage />} />
+        <MyRouter.Route path="/cart" element={<CartPage />} />
+        <MyRouter.Route path="/order" element={<OrderPage />} />
+      </MyRouter.Routes>
+    </MyRouter.Router>
+  );
+};
 
-// export default App;
+export default App;
 
 //? 함수 클래스 비교
 {
@@ -133,33 +137,30 @@ import ProductPage from "./pages/ProductPage";
 }
 
 //? createContext 구현
-import MyReact from "./lib/MyReact";
-import React from "react";
-
-const countContext = MyReact.createContext({});
-
-const CountProvider = ({ children }) => {
-  const [count, setCount] = React.useState(0);
-  const value = { count, setCount };
-  return (
-    <countContext.Provider value={value}>{children}</countContext.Provider>
-  );
-};
-
-const Count = () => {
-  const { count } = MyReact.useContext(countContext);
-  return <div>{count}</div>;
-};
-
-const PlusButton = () => {
-  const { count, setCount } = MyReact.useContext(countContext);
-  const handleClick = () => setCount(count + 1);
-  return <button onClick={handleClick}>카운트 증가</button>;
-};
-
-export default () => (
-  <CountProvider>
-    <Count />
-    <PlusButton />
-  </CountProvider>
-);
+{
+  // import MyReact from "./lib/MyReact";
+  // import React from "react";
+  // const countContext = MyReact.createContext({});
+  // const CountProvider = ({ children }) => {
+  //   const [count, setCount] = React.useState(0);
+  //   const value = { count, setCount };
+  //   return (
+  //     <countContext.Provider value={value}>{children}</countContext.Provider>
+  //   );
+  // };
+  // const Count = () => {
+  //   const { count } = MyReact.useContext(countContext);
+  //   return <div>{count}</div>;
+  // };
+  // const PlusButton = () => {
+  //   const { count, setCount } = MyReact.useContext(countContext);
+  //   const handleClick = () => setCount(count + 1);
+  //   return <button onClick={handleClick}>카운트 증가</button>;
+  // };
+  // export default () => (
+  //   <CountProvider>
+  //     <Count />
+  //     <PlusButton />
+  //   </CountProvider>
+  // );
+}

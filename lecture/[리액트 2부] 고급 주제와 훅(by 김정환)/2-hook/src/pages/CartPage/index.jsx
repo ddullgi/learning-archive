@@ -7,9 +7,11 @@ import Title from "../../components/Title";
 import ProductItem from "../../components/ProductItem";
 import OrderForm from "./OrderForm";
 import PaymentButton from "./PaymentButton";
+import * as MyRouter from "../../lib/MyRouter";
 
 const CartPage = () => {
   const [product, setProduct] = useState();
+  const { productId } = MyRouter.useParams();
 
   const fetch = async (productId) => {
     try {
@@ -31,8 +33,9 @@ const CartPage = () => {
   };
 
   useEffect(() => {
-    fetch("CACDA421");
-  }, []);
+    if (productId) fetch(productId);
+    console.log(MyRouter.useParams());
+  }, [productId]);
 
   return (
     <div className="CartPage">
