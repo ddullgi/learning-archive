@@ -2,9 +2,14 @@
 
 import { useState } from "react"
 
-export default function NewNote() {
+export default function NewNote({ setIsCreating }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("")
+
+  const onSave = async () => {
+    // Supabase에 노트 저장하기
+    setIsCreating(false)
+  }
 
   return <div className="w-2/3 p-2 flex flex-col gap-2 absolute top-0 bottom-0 right-0">
     <input
@@ -21,7 +26,11 @@ export default function NewNote() {
     />
 
     <div className="w-full flex justify-end">
-      <button className="border-2 border-green-600 rounded-full px-3 py-1 hover:bg-green-200 transition-all duration-300 ease-in-out" type="button" >저장</button>
+      <button
+        onClick={onSave}
+        className="border-2 border-green-600 rounded-full px-3 py-1 hover:bg-green-200 transition-all duration-300 ease-in-out" type="button" >
+        저장
+      </button>
     </div>
   </div>
 }
