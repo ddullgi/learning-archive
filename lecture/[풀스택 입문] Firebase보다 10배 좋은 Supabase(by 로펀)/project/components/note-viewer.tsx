@@ -1,12 +1,41 @@
 "use client"
 
+import { supabase } from "@/utils/supabase";
 import { useEffect, useState } from "react"
 
-export default function NoteViewer({ note }) {
+export default function NoteViewer({ note, setActiveNoteId, fetchNotes }) {
   const [title, setTitle] = useState(note?.title);
   const [content, setContent] = useState(note?.content);
   const [isEditing, setIsEditing] = useState(false);
 
+  const onEdit = async () => {
+    const { data, error } = await supabase
+      .from("note")
+      .update({ title, content })
+      .eq("id", note.id)
+
+    if (error) {
+      alert(error.message)
+    }
+
+    setIsEditing(false);
+    fetchNotes();
+  }
+
+  const onDelete = async () => {
+    const { data, error } = await supabase
+      .from("note")
+      .delete()
+      .eq("id", note.id)
+
+    if (error) {
+      alert(error.message)
+    }
+
+    setIsEditing(false);
+    setActiveNoteId(null);
+    fetchNotes();
+  }
   useEffect(() => {
     setTitle(note?.title);
     setContent(note?.content);
@@ -44,8 +73,14 @@ export default function NoteViewer({ note }) {
 
     <div className="w-full flex justify-end gap-2">
       {isEditing ? (<>
-        <button className="border-2 border-green-600 rounded-full px-3 py-1 hover:bg-green-200 transition-all duration-300 ease-in-out" type="button" >저장</button>
-        <button className="border-2 border-red-600 rounded-full px-3 py-1 hover:bg-red-200 transition-all duration-300 ease-in-out" type="button" >삭제</button>
+        <button
+          onClick={() => onEdit()}
+          className="border-2 border-green-600 rounded-full px-3 py-1 hover:bg-green-200 transition-all duration-300 ease-in-out"
+          type="button" >저장</button>
+        <button
+          onClick={() => onDelete()}
+          className="border-2 border-red-600 rounded-full px-3 py-1 hover:bg-red-200 transition-all duration-300 ease-in-out"
+          type="button" >삭제</button>
       </>) : (<>
         <button
           onClick={() => setIsEditing(true)}
