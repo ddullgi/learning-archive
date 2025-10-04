@@ -10,6 +10,7 @@
 - [클린코드 자바스크립트](<lecture/클린코드%20자바스크립트(by%20Poco)/README.md>) by Poco
 - [[리액트 2부] 고급 주제와 훅](<lecture/[리액트 2부] 고급 주제와 훅(by 김정환)>) by 김정환
 - [[풀스택 입문] Firebase보다 10배 좋은 Supabase](<lecture/[풀스택 입문] Firebase보다 10배 좋은 Supabase(by 로펀)/>) by 로펀
+- [[풀스택 완성] Supabase로 웹사이트 3개 클론하기 (Next.js 14)](<lecture/[풀스택 완성] Supabase로 웹사이트 3개 클론하기 (Next.js 14)/>) by 로펀
 
 ## 독서
 
